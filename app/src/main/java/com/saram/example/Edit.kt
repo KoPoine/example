@@ -1,0 +1,42 @@
+package com.saram.example
+
+import android.content.Intent
+import android.os.Bundle
+import android.text.Editable
+import android.util.Log
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import com.saram.example.databinding.ActivityEditBinding
+
+class Edit : BaseActivity() {
+
+    lateinit var binding: ActivityEditBinding
+    lateinit var mTopicData: UserData
+      val id = 0
+        val id2 = 1
+
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+            Log.d("테스트-1",id.toString())
+            super.onCreate(savedInstanceState)
+            binding = DataBindingUtil.setContentView(this, R.layout.activity_edit)
+            setupEvents()
+            setValues()
+
+    }
+
+    override fun setupEvents() {
+
+        Log.d("테스트00",id2.toString())
+
+    }
+
+    override fun setValues() {
+        Log.d("테스트001",id2.toString())
+
+
+        Log.d("테스트0012",id2.toString())
+        var input = binding.text12.text
+        Log.d("테스트3",input.toString())
+    }
+}
