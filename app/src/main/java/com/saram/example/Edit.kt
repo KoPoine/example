@@ -12,21 +12,28 @@ class Edit : BaseActivity() {
 
     lateinit var binding: ActivityEditBinding
     lateinit var mTopicData: UserData
-      val id = 0
-        val id2 = 1
+    val id = 0
+    val id2 = 1
 
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            Log.d("테스트-1",id.toString())
-            super.onCreate(savedInstanceState)
-            binding = DataBindingUtil.setContentView(this, R.layout.activity_edit)
-            setupEvents()
-            setValues()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("테스트-1",id.toString())
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit)
+        setupEvents()
+        setValues()
 
     }
 
     override fun setupEvents() {
+        binding.Btn12.setOnClickListener {
+            val inputContent = binding.text12.text.toString()
 
+            val resultIntent = Intent()
+            resultIntent.putExtra("string", inputContent)
+            setResult(RESULT_OK, resultIntent)
+            finish()
+        }
         Log.d("테스트00",id2.toString())
 
     }

@@ -21,7 +21,9 @@ class MainActivity : BaseActivity() {
 
     lateinit var mTopicData: UserData
     lateinit var mReplyAdapter: TopicRecyclerAdapter
-    val mReplyList = ArrayList<UserData>()
+    val mReplyList = ArrayList<String>()
+
+    val REQ_FOR_REPLY = 1004
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,25 +32,49 @@ class MainActivity : BaseActivity() {
         setValues()
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        val reply: String? = intent.getStringExtra("string")
+//        if (reply != null) {
+//            mReplyList.add(reply)
+//            mReplyAdapter.notifyDataSetChanged()
+//        }
+//    }
+
     override fun setupEvents() {
         binding.addReplyBtn.setOnClickListener {
-            Log.d("테스트-2",i.toString())
+            Log.d("테스트-2", i.toString())
             val myIntent = Intent(mContext, Edit::class.java)
-            startActivity(myIntent)
+            startActivityForResult(myIntent, REQ_FOR_REPLY)
 
 
 //        내 정보 화면으로 이동 (커스텀 액션바의 icon 클릭이벤트 활용)
         }
 
     }
-        override fun setValues() {
+
+    override fun setValues() {
+        mReplyAdapter = TopicRecyclerAdapter(mContext, mReplyList)
+        binding.rvProfile.adapter = mReplyAdapter
+        binding.rvProfile.layoutManager = LinearLayoutManager(mContext)
 
 
-            mReplyAdapter = TopicRecyclerAdapter(mContext,i)
-            binding.rvProfile.adapter = mReplyAdapter
-            binding.rvProfile.layoutManager = LinearLayoutManager(mContext)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQ_FOR_REPLY) {
+                val reply = data?.getStringExtra("string")!!
+
+                mReplyList.add(reply)
+                mReplyAdapter.notifyDataSetChanged()
+            }
         }
     }
+}
+
+
 
 
 

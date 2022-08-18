@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -15,37 +16,29 @@ import com.saram.example.databinding.ActivityEditBinding
 import com.saram.example.databinding.ActivityMainBinding
 
 class TopicRecyclerAdapter(
-    val mContext : Context, var id : Int
+    val mContext : Context, val mList : List<String>
 ) : RecyclerView.Adapter<TopicRecyclerAdapter.MyViewHolder>() {
 
     inner class MyViewHolder (view : View) : RecyclerView.ViewHolder(view) {
-        fun bind(textView: TextView){
+        fun bind(item: String){
 
-            val titleTxt = itemView.findViewById<TextView>(R.id.text12)
-            val Btn = itemView.findViewById<Button>(R.id.Btn12)
+            val contentTxt = itemView.findViewById<TextView>(R.id.contentTxt)
 
-            titleTxt.visibility = textView.visibility
-            Log.d("테스트",titleTxt.toString())
-
-               Btn.setOnClickListener {
-                val myIntent = Intent(mContext, MainActivity::class.java)
-                myIntent.putExtra("", titleTxt.toString())
-                mContext.startActivity(myIntent)
-            }
+            contentTxt.text = item
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val row = LayoutInflater.from(mContext).inflate(R.layout.activity_main, parent, false)
+        val row = LayoutInflater.from(mContext).inflate(R.layout.reply_list_item, parent, false)
         return MyViewHolder(row)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemView
+        holder.bind(mList[position])
     }
 
     override fun getItemCount(): Int {
-        return id++
+        return mList.size
     }
 
 }
